@@ -1,37 +1,11 @@
-from asyncio.windows_events import NULL
-from doctest import ELLIPSIS_MARKER
-from pydoc import cli
-from sqlite3 import enable_shared_cache
-import string
 from django.shortcuts import render
-from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
-from django.contrib.auth import logout
-from django.shortcuts import redirect
-#from .forms import CommentForm
-from django.shortcuts import render, get_object_or_404
-from django import forms
-#from .forms import SubmitForm
-from django.contrib import messages
-from django.urls import reverse, reverse_lazy
-from django.views import View
-from pyparsing import Char, rest_of_line
 from .models import (ClassificationResidentialBuilding, ClassificationNotResidentialBuilding, NewBuildingDemand, NewBuildingEnergyConsume, NewBuildingEmissions, ExistingBuildingDemand, ExistingBuildingEnergyConsume, ExistingBuildingEmissions, NewBuldingDemandDispersions, NewBuldingEnergyAndEmissionsDispersions, ExistingBuldingDemandDispersions, ExistingBuldingEnergyAndEmissionsDispersions,User,File,Calcul, BuildingValues, SoftwareValues, ClassificationData, ObjectData)
 from .serializers import (ClassificationResidentialBuildingSerializer, ClassificationNotResidentialBuildingSerializer, NewBuildingDemandSerializer, NewBuildingEnergyConsumeSerializer, NewBuildingEmissionsSerializer, ExistingBuildingDemandSerializer, ExistingBuildingEnergyConsumeSerializer, ExistingBuildingEmissionsSerializer, NewBuldingDemandDispersionsSerializer, NewBuldingEnergyAndEmissionsDispersionsSerializer, ExistingBuldingDemandDispersionsSerializer, ExistingBuldingEnergyAndEmissionsDispersionsSerializer, UserSerializer,FileSerializer,CalculSerializer,BuildingValuesSerializer,SoftwareValuesSerializer,ClassificationDataSerializer, ObjectDataSerializer)
-from django.db.models import Case, When
 from rest_framework.viewsets import ViewSet
 from rest_framework.response import Response
 from drf_yasg import openapi
-#from allauth.socialaccount import providers
-#from allauth.socialaccount.models import SocialLogin, SocialToken, SocialApp, SocialAccount
-from django.shortcuts import get_object_or_404
-#from allauth.socialaccount.providers.facebook.views import fb_complete_login
-#from allauth.socialaccount.helpers import complete_social_login
-#import allauth.account
 from drf_yasg.utils import swagger_auto_schema
 from rest_framework.decorators import api_view
-from django.core.validators import URLValidator
-from django.core.exceptions import ValidationError
-from rest_framework.parsers import JSONParser
 
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
