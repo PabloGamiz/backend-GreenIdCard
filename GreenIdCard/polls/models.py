@@ -170,5 +170,5 @@ class ObjectData(models.Model):
     object_type = models.CharField(max_length=100) # unifamiliar, bloc
     climatic_zone = models.CharField(max_length=4)  # A1, A2, D4...
     value1 = models.DecimalField(decimal_places=2, max_digits=100)
-    value2 = models.DecimalField(decimal_places=2, max_digits=100)
-    value3 = models.DecimalField(decimal_places=2, max_digits=100)
+    value2 = models.DecimalField(decimal_places=2, max_digits=100, null = True)
+    value3 = models.DecimalField(decimal_places=2, max_digits=100, null=True)
