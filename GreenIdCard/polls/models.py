@@ -164,11 +164,11 @@ class ClassificationData(models.Model):
 
 class ObjectData(models.Model):
     object = models.CharField(max_length=100)  #building, sistema software
-    antiquity = models.CharField(max_length=100)    # nou, existent
+    antiquity = models.CharField(max_length=100, null=True)    # nou, existent
     value_type = models.CharField(max_length=100)   # mean, dispersion
-    indicator = models.CharField(max_length=100)    # demanda, consum d'energia, emissions
+    indicator = models.CharField(max_length=100, null=True)    # demanda, consum d'energia, emissions
     object_type = models.CharField(max_length=100) # unifamiliar, bloc
-    climatic_zone = models.CharField(max_length=4)  # A1, A2, D4...
+    climatic_zone = models.CharField(max_length=4, null=True)  # A1, A2, D4...
     value1 = models.DecimalField(decimal_places=2, max_digits=100)
     value2 = models.DecimalField(decimal_places=2, max_digits=100, null = True)
     value3 = models.DecimalField(decimal_places=2, max_digits=100, null=True)

@@ -1,3 +1,4 @@
+from itertools import count
 from .models import (ClassificationResidentialBuilding, ClassificationNotResidentialBuilding, NewBuildingDemand, NewBuildingEnergyConsume, NewBuildingEmissions, ExistingBuildingDemand, ExistingBuildingEnergyConsume, ExistingBuildingEmissions, NewBuldingDemandDispersions, NewBuldingEnergyAndEmissionsDispersions, ExistingBuldingDemandDispersions, ExistingBuldingEnergyAndEmissionsDispersions,User,File,Calcul, BuildingValues, SoftwareValues, ClassificationData, ObjectData)
 from .serializers import (ClassificationResidentialBuildingSerializer, ClassificationNotResidentialBuildingSerializer, NewBuildingDemandSerializer, NewBuildingEnergyConsumeSerializer, NewBuildingEmissionsSerializer, ExistingBuildingDemandSerializer, ExistingBuildingEnergyConsumeSerializer, ExistingBuildingEmissionsSerializer, NewBuldingDemandDispersionsSerializer, NewBuldingEnergyAndEmissionsDispersionsSerializer, ExistingBuldingDemandDispersionsSerializer, ExistingBuldingEnergyAndEmissionsDispersionsSerializer, UserSerializer,FileSerializer,CalculSerializer,BuildingValuesSerializer,SoftwareValuesSerializer,ClassificationDataSerializer, ObjectDataSerializer)
 from rest_framework.viewsets import ViewSet
@@ -818,32 +819,49 @@ class ClassificationDataSet(ViewSet):
             return Response(status=status.HTTP_204_NO_CONTENT)
     
     @api_view(['GET'])
-    def getClassificationC1(request, number_metrics, C1):
+    def getClassificationC(request, number_metrics, C):
             try:
-                classification = ClassificationData.objects.get(number_metrics = number_metrics, min_C1__lte = C1, max_C1__gt=C1)
+                classification = ClassificationData.objects.get(number_metrics = number_metrics, min_C1__lte = C, max_C1__gt=C)
             except ClassificationData.DoesNotExist:
                 return Response(status=status.HTTP_404_NOT_FOUND)
             serializer = ClassificationDataSerializer(classification)
             return Response(serializer.data, status = status.HTTP_200_OK)
 
     @api_view(['GET'])
-    def getClassificationC1C2(request, C1, C2):
-            try:
-                classification = ClassificationData.objects.get(min_C1__lte = C1, max_C1__gt = C1, min_C2__lte =C2, max_C2__gt = C2)
-            except ClassificationData.DoesNotExist:
-                return Response(status=status.HTTP_404_NOT_FOUND)
-            serializer = ClassificationDataSerializer(classification)
-            return Response(serializer.data, status = status.HTTP_200_OK)
+    def getClassificationC1C2(request, number_metrics, C1, C2):
+
+            count_classifications = ClassificationData.objects.filter(number_metrics = number_metrics, min_C1__lte = C1, max_C1__gt = C1).count()
+            print(count_classifications)
+            if count_classifications == 1:
+                print('dentro de 1')
+                try:
+                    classification = ClassificationData.objects.get(number_metrics = number_metrics, min_C1__lte = C1, max_C1__gt=C1)
+                except ClassificationData.DoesNotExist:
+                    return Response(status=status.HTTP_404_NOT_FOUND)
+                serializer = ClassificationDataSerializer(classification)
+                return Response(serializer.data, status = status.HTTP_200_OK)
+            else:
+                print('dentro de 2')
+                try:
+                    classification = ClassificationData.objects.get(number_metrics = number_metrics,min_C1__lte = C1, max_C1__gt = C1, min_C2__lte =C2, max_C2__gt = C2)
+                except ClassificationData.DoesNotExist:
+                    return Response(status=status.HTTP_404_NOT_FOUND)
+                serializer = ClassificationDataSerializer(classification)
+                return Response(serializer.data, status = status.HTTP_200_OK)
 
 
 class CalculationDataSet(ViewSet):
 
     @api_view(['POST'])
     def createCalculationData(request):
+        print(request)
         serializer = ObjectDataSerializer(data=request.data)
+        print(serializer)
         if serializer.is_valid():
+            print('dentro de valido')
             serializer.save()
             return Response(serializer.data, status = status.HTTP_201_CREATED)
+        
         return Response(status=status.HTTP_404_NOT_FOUND)
     
     @api_view(['PUT', 'DELETE', 'GET'])
