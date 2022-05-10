@@ -75,4 +75,7 @@ urlpatterns =[
     path('calculationData/', views.CalculationDataSet.createCalculationData),
     path('buildingCalculationData/<str:object>/<str:antiquity>/<str:value_type>/<str:indicator>/<str:object_type>/<str:climatic_zone>/', views.CalculationDataSet.ModifyBuildingData),
     path('softwareCalculationData/<str:object>/<str:object_type>/<str:value_type>/', views.CalculationDataSet.ModifySoftwareData),
+    path('calculationData/', views.UserViewSet.createUser),
+    path('calculationData/<str:email>', views.UserViewSet.modifyUser),
+    
 ]

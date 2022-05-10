@@ -1,4 +1,6 @@
 from itertools import count
+
+from django.views import View
 from .models import (ClassificationResidentialBuilding, ClassificationNotResidentialBuilding, NewBuildingDemand, NewBuildingEnergyConsume, NewBuildingEmissions, ExistingBuildingDemand, ExistingBuildingEnergyConsume, ExistingBuildingEmissions, NewBuldingDemandDispersions, NewBuldingEnergyAndEmissionsDispersions, ExistingBuldingDemandDispersions, ExistingBuldingEnergyAndEmissionsDispersions,User,File,Calcul, BuildingValues, SoftwareValues, ClassificationData, ObjectData)
 from .serializers import (ClassificationResidentialBuildingSerializer, ClassificationNotResidentialBuildingSerializer, NewBuildingDemandSerializer, NewBuildingEnergyConsumeSerializer, NewBuildingEmissionsSerializer, ExistingBuildingDemandSerializer, ExistingBuildingEnergyConsumeSerializer, ExistingBuildingEmissionsSerializer, NewBuldingDemandDispersionsSerializer, NewBuldingEnergyAndEmissionsDispersionsSerializer, ExistingBuldingDemandDispersionsSerializer, ExistingBuldingEnergyAndEmissionsDispersionsSerializer, UserSerializer,FileSerializer,CalculSerializer,BuildingValuesSerializer,SoftwareValuesSerializer,ClassificationDataSerializer, ObjectDataSerializer)
 from rest_framework.viewsets import ViewSet
@@ -901,4 +903,65 @@ class CalculationDataSet(ViewSet):
             return Response(status=status.HTTP_204_NO_CONTENT)
         elif request.method == 'GET': 
             serializer = ObjectDataSerializer(bv)
+            return Response(serializer.data, status = status.HTTP_200_OK)
+
+
+class UserViewSet(ViewSet):
+
+    @api_view(['POST'])
+    def createUser(request):
+        serializer = UserSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status = status.HTTP_201_CREATED)
+        
+        return Response(status=status.HTTP_404_NOT_FOUND)
+    
+    @api_view(['PUT', 'DELETE', 'GET'])
+    def modifyUser(request, email):
+        try:
+            u = User.objects.get(email = email)
+        except User.DoesNotExist:
+            return Response(status=status.HTTP_404_NOT_FOUND)
+        if request.method == 'PUT':
+            serializer = UserSerializer(u, data=request.data)
+            if serializer.is_valid():
+                serializer.save()
+                return Response(serializer.data, status = status.HTTP_200_OK)
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        elif request.method == 'DELETE':
+            u.delete()
+            return Response(status=status.HTTP_204_NO_CONTENT)
+        elif request.method == 'GET': 
+            serializer = UserSerializer(u)
+            return Response(serializer.data, status = status.HTTP_200_OK)
+
+class FileViewSet(ViewSet):
+
+    @api_view(['POST'])
+    def createUser(request):
+        serializer = FileSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status = status.HTTP_201_CREATED)
+        
+        return Response(status=status.HTTP_404_NOT_FOUND)
+    
+    @api_view(['PUT', 'DELETE', 'GET'])
+    def modifyUser(request, email):
+        try:
+            u = File.objects.get(email = email)
+        except File.DoesNotExist:
+            return Response(status=status.HTTP_404_NOT_FOUND)
+        if request.method == 'PUT':
+            serializer = FileSerializer(u, data=request.data)
+            if serializer.is_valid():
+                serializer.save()
+                return Response(serializer.data, status = status.HTTP_200_OK)
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        elif request.method == 'DELETE':
+            u.delete()
+            return Response(status=status.HTTP_204_NO_CONTENT)
+        elif request.method == 'GET': 
+            serializer = FileSerializer(u)
             return Response(serializer.data, status = status.HTTP_200_OK)

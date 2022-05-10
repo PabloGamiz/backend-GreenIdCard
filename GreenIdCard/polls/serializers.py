@@ -67,7 +67,7 @@ class ExistingBuldingEnergyAndEmissionsDispersionsSerializer(serializers.ModelSe
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ('id','username', 'password', 'email')
+        fields = ('email', 'name','surname', 'password')
 
 class FileSerializer(serializers.ModelSerializer):
     user = UserSerializer(read_only=True)

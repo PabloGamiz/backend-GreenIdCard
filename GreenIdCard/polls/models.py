@@ -119,9 +119,11 @@ class ExistingBuldingEnergyAndEmissionsDispersions(models.Model):
     unique_together = [["building_type", "climatic_zone"]]
 
 class User(models.Model):
-    username = models.CharField(primary_key=True, max_length=100)
+    email = models.CharField(max_length=100, primary_key=True)
+    name = models.CharField(max_length=100)
+    surname = models.CharField(max_length=100)
     password = models.CharField(max_length=100)
-    email = models.CharField(max_length=100)
+    
 
 class File(models.Model):
     name = models.CharField(max_length=100)

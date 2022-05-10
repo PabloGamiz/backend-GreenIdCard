@@ -1,0 +1,748 @@
+swagger: '2.0'
+info:
+  description: |
+    Documentació de la API generada per al Treball de fi de Grau
+  version: 1.0.0
+  title: GreenIdCard
+  termsOfService: http://swagger.io/terms/
+  contact:
+    email: apiteam@swagger.io
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+# host: petstore.swagger.io
+# basePath: /v2
+tags:
+- name: fitxer
+  description: Crides relacionades amb els fitxers
+  externalDocs:
+    description: Find out more
+    url: http://swagger.io
+- name: càlculs
+  description: Crides relacionades amb els càlculs que es poden guardar 
+- name: user
+  description: Operations about user
+  externalDocs:
+    description: Find out more about our store
+    url: http://swagger.io
+# schemes:
+# - http
+paths:
+  /classificationData/:
+    post:
+      tags:
+      - Classification
+      summary: Crea les diferents classificacions per a edificis nous amb el valors de la classificacio
+      operationId: ResidentialBuildingCassification_create
+      consumes:
+      - application/json
+      - application/xml
+      produces:
+      - application/json
+      - application/xml
+      parameters:
+      - in: body
+        name: body
+        description: Classificacio que es crea
+        required: true
+        schema:
+          $ref: '#/definitions/ClassificationResidentialBuilding'
+      responses:
+        404:
+          description: Not found
+        201:
+          description: Classification created
+          schema:
+            $ref: '#/definitions/ClassificationResidentialBuilding'
+            
+  /classificationData/{number_metrics}/{classification}:
+    put:
+      tags:
+      - Classification
+      summary: Actualitza les diferents classificacions per a edificis nous amb el valors de la classificacio
+      operationId: ResidentialBuildingCassification_update
+      consumes:
+      - application/json
+      - application/xml
+      produces:
+      - application/json
+      - application/xml
+      parameters:
+      - in: path
+        name: classification
+        description: Classificacio que es vol actualitzar
+        required: true
+        type: string
+      - in: path
+        name: number_metrics
+        description: Nombre de metriques de la classificacio
+        required: true
+        type: integer
+      - in: body
+        name: body
+        description: Valors que es volen actualitzar
+        required: true
+        schema:
+          $ref: '#/definitions/ClassificationResidentialBuilding'
+      responses:
+        404:
+          description: Not found
+        200:
+          description: Demand updated
+    delete:
+      tags:
+      - Classification
+      summary: Actualitza les diferents classificacions per a edificis nous amb el valors de la classificacio
+      operationId: ResidentialBuildingCassification_delete
+      consumes:
+      - application/json
+      - application/xml
+      produces:
+      - application/json
+      - application/xml
+      parameters:
+      - in: path
+        name: number_metrics
+        description: Nombre de metriques de la classificacio
+        required: true
+        type: integer
+      - in: path
+        name: classification
+        description: Classificacio que es vol actualitzar
+        required: true
+        type: string
+      responses:
+        404:
+          description: Not found
+        204:
+          description: Demand deleted       
+  /classificationDataC/{number_metrics}/{C1}:
+    get:
+      tags:
+      - Classification
+      summary: Obtè el valor de la classificacio per un valor introduit d\'un edifici residencial
+      operationId: ResidentialBuildingCassificationC1_get
+      consumes:
+      - application/json
+      - application/xml
+      produces:
+      - application/json
+      - application/xml
+      parameters:
+      - in: path
+        name: number_metrics
+        description: Nombre de metriques de la classificacio
+        required: true
+        type: integer
+      - in: path
+        name: C1
+        description: Proporciona el valor de C1 calculat
+        required: true
+        type: number
+        format: float
+      responses:
+        404:
+          description: Not found
+        200:
+          description: Classification obtained
+          
+  /classificationDataC1C2/{number_metrics}/{C1}/{C2}:
+    get:
+      tags:
+      - Classification
+      summary: Obtè el valor de la classificacio per uns valors introduit d'un edifici residencial
+      operationId: ResidentialBuildingCassificationC1C2_get
+      consumes:
+      - application/json
+      - application/xml
+      produces:
+      - application/json
+      - application/xml
+      parameters:
+      - in: path
+        name: number_metrics
+        description: Nombre de metriques de la classificacio
+        required: true
+        type: integer
+      - in: path
+        name: C1
+        description: Proporciona el valor de C1 calculat
+        required: true
+        type: number
+        format: float
+      - in: path
+        name: C2
+        description: Proporciona el valor de C2 calculat
+        required: true
+        type: number
+        format: float
+      responses:
+        404:
+          description: Not found
+        200:
+          description: Classification obtained
+          
+  /objectData/:
+    post:
+      tags:
+      - Object data
+      summary: Crea les dades que es faran servir per calcular l'eficiencia
+      operationId: ObjectData_create
+      consumes:
+      - application/json
+      - application/xml
+      produces:
+      - application/json
+      - application/xml
+      parameters:
+      - in: body
+        name: body
+        description: Dades de calcul que es creen
+        required: true
+        schema:
+          $ref: '#/definitions/ClassificationNotResidentialBuilding'
+      responses:
+        404:
+          description: Not found
+        201:
+          description: Classification created
+          schema:
+            $ref: '#/definitions/ClassificationNotResidentialBuilding'
+            
+  /buildingObjectData/{object}/{antiquity}/{value_type}/{indicator}/{object_type}/{climatic_zone}:
+    put:
+      tags:
+      - NonResidentialBuildingClassification
+      summary: Actualitza les diferents classificacions per a edificis no residencials amb el valors de la classificacio
+      operationId: BuildingObjectData_update
+      consumes:
+      - application/json
+      - application/xml
+      produces:
+      - application/json
+      - application/xml
+      parameters:
+      - in: path
+        name: object
+        description: quin objecte es vol actualitzar
+        required: true
+        type: string
+      - in: path
+        name: antiquity
+        description: antiguitat del objecte
+        required: true
+        type: string
+      - in: path
+        name: value_type
+        description: indica la metrica del objecte
+        required: true
+        type: string
+      - in: path
+        name: indicator
+        description: indicador del objecte
+        required: true
+        type: string
+      - in: path
+        name: object_type
+        description: indica el tipus de l'objecte que s'ha
+          seleccionat
+        required: true
+        type: string
+      - in: path
+        name: climatic_zone
+        description: indica la zona climatica de l'objecte
+        required: true
+        type: string
+      - in: body
+        name: body
+        description: Valors que es volen actualitzar
+        required: true
+        schema:
+          $ref: '#/definitions/ClassificationNotResidentialBuilding'
+      responses:
+        404:
+          description: Not found
+        200:
+          description: Values updated
+          schema:
+            $ref: '#/definitions/ClassificationNotResidentialBuilding'
+    delete:
+      tags:
+      - ObjectData
+      summary: Esborra un registre dels valors que es fan servir per calcular l'eficiencia energetica
+      operationId: BuildingObjectData_delete
+      consumes:
+      - application/json
+      - application/xml
+      produces:
+      - application/json
+      - application/xml
+      parameters:
+      - in: path
+        name: object
+        description: quin objecte es vol actualitzar
+        required: true
+        type: string
+      - in: path
+        name: antiquity
+        description: antiguitat del objecte
+        required: true
+        type: string
+      - in: path
+        name: value_type
+        description: indica la metrica del objecte
+        required: true
+        type: string
+      - in: path
+        name: indicator
+        description: indicador del objecte
+        required: true
+        type: string
+      - in: path
+        name: object_type
+        description: indica el tipus de l'objecte que s'ha
+          seleccionat
+        required: true
+        type: string
+      - in: path
+        name: climatic_zone
+        description: indica la zona climatica de l'objecte
+        required: true
+        type: string
+      responses:
+        404:
+          description: Not found
+        200:
+          description: Classification deleted
+            
+    get:
+      tags:
+      - NonResidentialBuildingClassification
+      summary: Obtè el valor de la classificacio per un valor introduit d\'un edifici no residencial
+      operationId: NonResidentialBuildingCassificationC_get
+      consumes:
+      - application/json
+      - application/xml
+      produces:
+      - application/json
+      - application/xml
+      parameters:
+      - in: path
+        name: object
+        description: quin objecte es vol actualitzar
+        required: true
+        type: string
+      - in: path
+        name: antiquity
+        description: antiguitat del objecte
+        required: true
+        type: string
+      - in: path
+        name: value_type
+        description: indica la metrica del objecte
+        required: true
+        type: string
+      - in: path
+        name: indicator
+        description: indicador del objecte
+        required: true
+        type: string
+      - in: path
+        name: object_type
+        description: indica el tipus de l'objecte que s'ha
+          seleccionat
+        required: true
+        type: string
+      - in: path
+        name: climatic_zone
+        description: indica la zona climatica de l'objecte
+        required: true
+        type: string
+      responses:
+        404:
+          description: Not found
+        200:
+          description: Classification obtained
+            
+  /softwareObjectData/{object}/{value_type}/{object_type}:
+    put:
+      tags:
+      - NewBuildingDemand
+      summary: Crea els valors mitjans de demanda de calefaccio i refrigeracio per un edifici nou
+      operationId: NewBuildingDemand_create
+      consumes:
+      - application/json
+      - application/xml
+      produces:
+      - application/json
+      - application/xml
+      parameters:
+      - in: path
+        name: object
+        description: quin objecte es vol actualitzar
+        required: true
+        type: string
+      - in: path
+        name: value_type
+        description: indica la metrica del objecte
+        required: true
+        type: string
+      - in: path
+        name: object_type
+        description: indica el tipus de l'objecte que s'ha
+          seleccionat
+        required: true
+        type: string
+      - in: body
+        name: body
+        description: Dades actualitzades
+        required: true
+        schema:
+          $ref: '#/definitions/NewBuildingDemand'
+      responses:
+        404:
+          description: Not found
+        201:
+          description: Demand created
+          schema:
+            $ref: '#/definitions/NewBuildingDemand'
+    delete:
+      tags:
+      - NewBuildingDemand
+      summary: Crea els valors mitjans de demanda de calefaccio i refrigeracio per un edifici nou
+      operationId: NewBuildingDemand_create
+      consumes:
+      - application/json
+      - application/xml
+      produces:
+      - application/json
+      - application/xml
+      parameters:
+      - in: path
+        name: object
+        description: quin objecte es vol actualitzar
+        required: true
+        type: string
+      - in: path
+        name: value_type
+        description: indica la metrica del objecte
+        required: true
+        type: string
+      - in: path
+        name: object_type
+        description: indica el tipus de l'objecte que s'ha
+          seleccionat
+        required: true
+        type: string
+      responses:
+        404:
+          description: Not found
+        201:
+          description: Demand created
+          schema:
+            $ref: '#/definitions/NewBuildingDemand'
+    get:
+      tags:
+      - NewBuildingDemand
+      summary: Crea els valors mitjans de demanda de calefaccio i refrigeracio per un edifici nou
+      operationId: NewBuildingDemand_create
+      consumes:
+      - application/json
+      - application/xml
+      produces:
+      - application/json
+      - application/xml
+      parameters:
+      - in: path
+        name: object
+        description: quin objecte es vol actualitzar
+        required: true
+        type: string
+      - in: path
+        name: value_type
+        description: indica la metrica del objecte
+        required: true
+        type: string
+      - in: path
+        name: object_type
+        description: indica el tipus de l'objecte que s'ha
+          seleccionat
+        required: true
+        type: string
+      responses:
+        404:
+          description: Not found
+        201:
+          description: Demand created
+          schema:
+            $ref: '#/definitions/NewBuildingDemand'
+  
+  
+definitions:
+  ClassificationResidentialBuilding:
+    type: object
+    properties:
+      calification:
+        type: string
+      min_C1:
+        type: number
+        format: float
+      max_C1:
+        type: number
+        format: float
+      min_C2:
+        type: number
+        format: float
+      max_C2:
+        type: number
+        format: float
+    xml:
+      name: ClassificationResidentialBuilding
+  ClassificationNotResidentialBuilding:
+    type: object
+    properties:
+      calification:
+        type: string
+      min_C:
+        type: number
+        format: float
+      max_C:
+        type: number
+        format: float
+    xml:
+      name: ClassificationNotResidentialBuilding
+  NewBuildingDemand:
+    type: object
+    properties:
+      building_type:
+        type: integer
+      climatic_zone:
+        type: string
+      heating:
+        type: number
+        format: float
+      refrigeration:
+        type: number
+        format: float
+    xml:
+      name: NewBuildingDemand
+  NewBuildingEnergyConsume:
+    type: object
+    properties:
+      building_type:
+        type: integer
+      climatic_zone:
+        type: string
+      heating:
+        type: number
+        format: float
+      refrigeration:
+        type: number
+        format: float
+      ACS:
+        type: number
+        format: float
+    xml:
+      name: NewBuildingEnergyConsume
+  NewBuildingEmissions:
+    type: object
+    properties:
+      building_type:
+        type: integer
+      climatic_zone:
+        type: string
+      heating:
+        type: number
+        format: float
+      refrigeration:
+        type: number
+        format: float
+      ACS:
+        type: number
+        format: float
+    xml:
+      name: NewBuildingEmissions
+  ExistingBuildingDemand:
+    type: object
+    properties:
+      building_type:
+        type: integer
+      climatic_zone:
+        type: string
+      heating:
+        type: number
+        format: float
+      refrigeration:
+        type: number
+        format: float
+    xml:
+      name: ExistingBuildingDemand
+  ExistingBuildingEnergyConsume:
+    type: object
+    properties:
+      building_type:
+        type: integer
+      climatic_zone:
+        type: string
+      heating:
+        type: number
+        format: float
+      refrigeration:
+        type: number
+        format: float
+      ACS:
+        type: number
+        format: float
+    xml:
+      name: ExistingBuildingEnergyConsume
+  ExistingBuildingEmissions:
+    type: object
+    properties:
+      building_type:
+        type: integer
+      climatic_zone:
+        type: string
+      heating:
+        type: number
+        format: float
+      refrigeration:
+        type: number
+        format: float
+      ACS:
+        type: number
+        format: float
+    xml:
+      name: ExistingBuildingEmissions
+  NewBuldingDemandDispersions:
+    type: object
+    properties:
+      building_type:
+        type: integer
+      climatic_zone:
+        type: string
+      dispersion:
+        type: number
+        format: float
+    xml:  
+      name: NewBuldingDemandDispersions
+  NewBuldingEnergyAndEmissionsDispersions:
+    type: object
+    properties:
+      building_type:
+        type: integer
+      climatic_zone:
+        type: string
+      dispersion:
+        type: number
+        format: float
+    xml:
+      name: NewBuldingEnergyAndEmissionsDispersions
+  ExistingBuldingDemandDispersions:
+    type: object
+    properties:
+      building_type:
+        type: integer
+      climatic_zone:
+        type: string
+      dispersion:
+        type: number
+        format: float
+    xml:
+      name: ExistingBuldingDemandDispersions
+  ExistingBuldingEnergyAndEmissionsDispersions:
+    type: object
+    properties:
+      building_type:
+        type: integer
+      climatic_zone:
+        type: string
+      dispersion:
+        type: number
+        format: float
+    xml:    
+      name: ExistingBuldingEnergyAndEmissionsDispersions
+  Fitxer:
+    type: object
+    properties:
+      id:
+        type: integer
+        format: int64
+      nom d'usuari:
+        type: string
+      nom:
+        type: string
+      descripció:
+        type: string
+    xml:
+      name: Fitxer
+  User:
+    type: object
+    properties:
+      id:
+        type: integer
+        format: int64
+      nombre usuari:
+        type: string
+      contrasenya:
+        type: string
+      correu:
+        type: string
+    xml:
+      name: User
+  Calcul:
+    type: object
+    properties:
+      id:
+        type: integer
+        format: int64
+      id de fitxer:
+        type: integer
+        format: int64
+      nom:
+        type: string
+      tipus:
+        type: string
+      hora:
+        type: integer
+      minut:
+        type: integer
+      dia: 
+        type: integer
+      mes:
+        type: integer
+      any:
+        type: integer
+      consum:
+        type: number
+        format: double
+      calificació energètica:
+        type: string
+      emissions de CO2:
+        type: number
+        format: double
+      cost:
+        type: number
+        format: double
+    xml:
+      name: Calcul
+  ApiResponse:
+    type: object
+    properties:
+      code:
+        type: integer
+        format: int32
+      type:
+        type: string
+      message:
+        type: string
+externalDocs:
+  description: Find out more about Swagger
+  url: http://swagger.io
+# Added by API Auto Mocking Plugin
+host: virtserver.swaggerhub.com
+# basePath: /PabloGamiz/prueba/1.0.0
+schemes:
+ - https
+ - http
+# Added by API Auto Mocking Plugin
+basePath: /PabloGamiz/GreenIdCard/1.0.0
