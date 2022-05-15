@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import (ClassificationData, ClassificationResidentialBuilding, ClassificationNotResidentialBuilding, NewBuildingDemand, NewBuildingEnergyConsume, NewBuildingEmissions, ExistingBuildingDemand, ExistingBuildingEnergyConsume, ExistingBuildingEmissions, NewBuldingDemandDispersions, NewBuldingEnergyAndEmissionsDispersions, ExistingBuldingDemandDispersions, ExistingBuldingEnergyAndEmissionsDispersions, ObjectData,User,File,Calcul)
+from .models import (ClassificationData, ClassificationResidentialBuilding, ClassificationNotResidentialBuilding, NewBuildingDemand, NewBuildingEnergyConsume, NewBuildingEmissions, ExistingBuildingDemand, ExistingBuildingEnergyConsume, ExistingBuildingEmissions, NewBuldingDemandDispersions, NewBuldingEnergyAndEmissionsDispersions, ExistingBuldingDemandDispersions, ExistingBuldingEnergyAndEmissionsDispersions, ObjectData,SystemUser,File,Calcul)
 
 
 # Register your models here.
@@ -16,7 +16,7 @@ admin.site.register(NewBuldingDemandDispersions)
 admin.site.register(NewBuldingEnergyAndEmissionsDispersions)
 admin.site.register(ExistingBuldingDemandDispersions)
 admin.site.register(ExistingBuldingEnergyAndEmissionsDispersions)
-admin.site.register(User)
+admin.site.register(SystemUser)
 admin.site.register(File)
 admin.site.register(Calcul)
 admin.site.register(ObjectData)

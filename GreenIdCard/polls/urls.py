@@ -75,7 +75,12 @@ urlpatterns =[
     path('calculationData/', views.CalculationDataSet.createCalculationData),
     path('buildingCalculationData/<str:object>/<str:antiquity>/<str:value_type>/<str:indicator>/<str:object_type>/<str:climatic_zone>/', views.CalculationDataSet.ModifyBuildingData),
     path('softwareCalculationData/<str:object>/<str:object_type>/<str:value_type>/', views.CalculationDataSet.ModifySoftwareData),
-    path('calculationData/', views.UserViewSet.createUser),
-    path('calculationData/<str:email>', views.UserViewSet.modifyUser),
-    
+    path('user/', views.UserViewSet.createUser),
+    path('user/<str:email>', views.UserViewSet.modifyUser),
+    path('user/<str:email>/folder', views.FileViewSet.getFiles),
+    path('folder/', views.FileViewSet.createFile),
+    path('folder/<int:id>', views.FileViewSet.modifyFile),
+    path('folder/<str:email>/calcul', views.CalculViewSet.getCalculs),
+    path('calcul/', views.CalculViewSet.createCalcul),
+    path('calcul/<int:id>', views.CalculViewSet.modifyCalcul),   
 ]

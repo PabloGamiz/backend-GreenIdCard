@@ -1,6 +1,6 @@
 from tkinter import ALL
 from rest_framework import serializers
-from .models import (BuildingValues, ClassificationResidentialBuilding, ClassificationNotResidentialBuilding, NewBuildingDemand, NewBuildingEnergyConsume, NewBuildingEmissions, ExistingBuildingDemand, ExistingBuildingEnergyConsume, ExistingBuildingEmissions, NewBuldingDemandDispersions, NewBuldingEnergyAndEmissionsDispersions, ExistingBuldingDemandDispersions, ExistingBuldingEnergyAndEmissionsDispersions, SoftwareValues, User, File, Calcul, ClassificationData, ObjectData)
+from .models import (BuildingValues, ClassificationResidentialBuilding, ClassificationNotResidentialBuilding, NewBuildingDemand, NewBuildingEnergyConsume, NewBuildingEmissions, ExistingBuildingDemand, ExistingBuildingEnergyConsume, ExistingBuildingEmissions, NewBuldingDemandDispersions, NewBuldingEnergyAndEmissionsDispersions, ExistingBuldingDemandDispersions, ExistingBuldingEnergyAndEmissionsDispersions, SoftwareValues, SystemUser, File, Calcul, ClassificationData, ObjectData)
 
 
 class ClassificationResidentialBuildingSerializer(serializers.ModelSerializer):
@@ -64,13 +64,13 @@ class ExistingBuldingEnergyAndEmissionsDispersionsSerializer(serializers.ModelSe
         model = ExistingBuldingEnergyAndEmissionsDispersions
         fields = ('building_type','climatic_zone','dispersion')
 
-class UserSerializer(serializers.ModelSerializer):
+class SystemUserSerializer(serializers.ModelSerializer):
     class Meta:
-        model = User
-        fields = ('email', 'name','surname', 'password')
+        model = SystemUser
+        fields = ('id', 'email', 'name','surname', 'password')
 
 class FileSerializer(serializers.ModelSerializer):
-    user = UserSerializer(read_only=True)
+    user = SystemUserSerializer(read_only=True)
     class Meta:
         model = File
         fields = ('id','name', 'description', 'user')
@@ -79,7 +79,7 @@ class CalculSerializer(serializers.ModelSerializer):
     file = FileSerializer(read_only=True)
     class Meta:
         model = Calcul
-        fields = ('id','type', 'date', 'value', 'calification', 'consumption', 'file')
+        fields = ('id','type', 'date','file','value11','calification11','value12','calification12','value13','calification13','value21','calification21','value22','calification22','value23','calification23','value31','calification31','value32','calification32','value33','calification33')
 
 class BuildingValuesSerializer(serializers.ModelSerializer):
 

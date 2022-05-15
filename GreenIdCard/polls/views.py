@@ -1,8 +1,8 @@
 from itertools import count
 
 from django.views import View
-from .models import (ClassificationResidentialBuilding, ClassificationNotResidentialBuilding, NewBuildingDemand, NewBuildingEnergyConsume, NewBuildingEmissions, ExistingBuildingDemand, ExistingBuildingEnergyConsume, ExistingBuildingEmissions, NewBuldingDemandDispersions, NewBuldingEnergyAndEmissionsDispersions, ExistingBuldingDemandDispersions, ExistingBuldingEnergyAndEmissionsDispersions,User,File,Calcul, BuildingValues, SoftwareValues, ClassificationData, ObjectData)
-from .serializers import (ClassificationResidentialBuildingSerializer, ClassificationNotResidentialBuildingSerializer, NewBuildingDemandSerializer, NewBuildingEnergyConsumeSerializer, NewBuildingEmissionsSerializer, ExistingBuildingDemandSerializer, ExistingBuildingEnergyConsumeSerializer, ExistingBuildingEmissionsSerializer, NewBuldingDemandDispersionsSerializer, NewBuldingEnergyAndEmissionsDispersionsSerializer, ExistingBuldingDemandDispersionsSerializer, ExistingBuldingEnergyAndEmissionsDispersionsSerializer, UserSerializer,FileSerializer,CalculSerializer,BuildingValuesSerializer,SoftwareValuesSerializer,ClassificationDataSerializer, ObjectDataSerializer)
+from .models import (ClassificationResidentialBuilding, ClassificationNotResidentialBuilding, NewBuildingDemand, NewBuildingEnergyConsume, NewBuildingEmissions, ExistingBuildingDemand, ExistingBuildingEnergyConsume, ExistingBuildingEmissions, NewBuldingDemandDispersions, NewBuldingEnergyAndEmissionsDispersions, ExistingBuldingDemandDispersions, ExistingBuldingEnergyAndEmissionsDispersions,SystemUser,File,Calcul, BuildingValues, SoftwareValues, ClassificationData, ObjectData)
+from .serializers import (ClassificationResidentialBuildingSerializer, ClassificationNotResidentialBuildingSerializer, NewBuildingDemandSerializer, NewBuildingEnergyConsumeSerializer, NewBuildingEmissionsSerializer, ExistingBuildingDemandSerializer, ExistingBuildingEnergyConsumeSerializer, ExistingBuildingEmissionsSerializer, NewBuldingDemandDispersionsSerializer, NewBuldingEnergyAndEmissionsDispersionsSerializer, ExistingBuldingDemandDispersionsSerializer, ExistingBuldingEnergyAndEmissionsDispersionsSerializer, SystemUserSerializer,FileSerializer,CalculSerializer,BuildingValuesSerializer,SoftwareValuesSerializer,ClassificationDataSerializer, ObjectDataSerializer)
 from rest_framework.viewsets import ViewSet
 from rest_framework.response import Response
 from drf_yasg import openapi
@@ -505,87 +505,6 @@ class ExistingBuildingEnergyAndEmissionsDispersionsSet(ViewSet):
         serializer = ExistingBuldingEnergyAndEmissionsDispersionsSerializer(ec, data=request.data)
         return Response(serializer.data, status = status.HTTP_200_OK)
 
-class UserView(ViewSet):
-
-    @swagger_auto_schema(
-        operation_description='Crea un usuari', 
-        request_body=openapi.Schema(
-            type=openapi.TYPE_OBJECT,
-            description='Proporciona el nom d\'usuari, la contrasenya i el email de l\'usuari',
-            properties= {
-                'username': openapi.Schema(type=openapi.TYPE_BOOLEAN,
-                                    description='Proporciona el nom d\'usuari',
-                                    example= 'username'),
-                'password': openapi.Schema(type=openapi.TYPE_STRING,
-                                    description='Proporciona la contrasenya',
-                                    example= 'a37dfv7f'),
-                'email': openapi.Schema(type=openapi.TYPE_NUMBER,
-                                    format=openapi.FORMAT_FLOAT,
-                                    description='Proporciona l\'email',
-                                    example= 'exemple@gmail.com'),
-            },
-            required=["username", "password", "email"],
-        ),
-        responses= { 404: 'No s\'ha pogut crear l\'usuari', 200: UserSerializer})
-    def create(self, request, pk=None):
-        u = User(username=request.data['username'], password=request.data['password'], email=request.data['email'])
-        if u.DoesNotExist:
-            return Response ('No s\'ha pogut crear l\'usuari', 404)
-        else:
-            serializer = UserSerializer(u)
-            return Response(serializer.data)
-
-    @swagger_auto_schema(
-        operation_description='Actualitza la informació d\'un usuari', 
-        manual_parameters=[
-            openapi.Parameter(
-                'email',
-                in_=openapi.IN_PATH,
-                type=openapi.TYPE_STRING,
-                required=True,
-                description='Proporciona l\'email',
-            ),
-            openapi.Parameter(
-                'password',
-                in_=openapi.IN_PATH,
-                type=openapi.TYPE_STRING,
-                required=True,
-                description='Proporciona la contrasenya',
-            ),
-        ],
-        responses= {401: 'You provided no api key', 404: 'contribution not found', 200: 'Dispersions d\'energia i dimensions creades correctament'})
-    def update(self, request):
-        u = User.objects.filter(email = request.data['email'])
-        u.password = request.data['password']
-        u.save()
-        serializer = UserSerializer(u)
-        return Response(serializer.data)
-
-    @swagger_auto_schema(
-        operation_description='Actualitza la informació d\'un usuari', 
-        responses= {401: 'You provided no api key', 404: 'contribution not found', 200: FileSerializer})
-    def retrieve(self, request, pk = None):
-        u = User.objects.filter(pk = pk)
-        serializer = FileSerializer(u)
-        return Response(serializer.data)
-
-    @swagger_auto_schema(
-        operation_description='Actualitza la informació d\'un usuari', 
-        manual_parameters=[
-            openapi.Parameter(
-                'username',
-                in_=openapi.IN_PATH,
-                type=openapi.TYPE_STRING,
-                required=True,
-                description='Proporciona l\'usuari a esborrar',
-            ),
-        ],
-        responses= {401: 'You provided no api key', 404: 'contribution not found', 200: 'Dispersions d\'energia i dimensions creades correctament'})
-    def delete(self, request):
-        u = User.objects.filter(username = request.data['username'])
-        result = u.delete()
-        return Response(result)
-
 class FileView(ViewSet):
 
     @swagger_auto_schema(
@@ -640,23 +559,6 @@ class FileView(ViewSet):
         return Response(serializer.data)
 
     @swagger_auto_schema(
-            operation_description='Obte els calculs d\'un fitxer', 
-            manual_parameters=[
-                openapi.Parameter(
-                    'file',
-                    in_=openapi.IN_PATH,
-                    type=openapi.TYPE_STRING,
-                    required=True,
-                    description='Proporciona l\'email',
-                ),
-            ],
-            responses= {401: 'You provided no api key', 404: 'contribution not found', 200: CalculSerializer})
-    def retrieve(self, request, pk = None):
-        c = File.objects.filter(pk=pk)
-        serializer = UserSerializer(c)
-        return Response(serializer.data)
-
-    @swagger_auto_schema(
         operation_description='Esborra un fitxer', 
         responses= {401: 'You provided no api key', 404: 'contribution not found', 200: 'Dispersions d\'energia i dimensions creades correctament'})
     def delete(self, request, pk=None):
@@ -700,23 +602,6 @@ class CalculSet(ViewSet):
     def create(self, request, pk=None):
         c = Calcul(type=request.data['type'], date=request.data['date'], value=request.data['value'],calification=request.data['calification'], consumption=request.data['consumption'], file=request.data['file'])
         serializer = CalculSerializer(c)
-        return Response(serializer.data)
-
-    @swagger_auto_schema(
-        operation_description='Actualitza la informació d\'un usuari', 
-        manual_parameters=[
-            openapi.Parameter(
-                'email',
-                in_=openapi.IN_PATH,
-                type=openapi.TYPE_STRING,
-                required=True,
-                description='Proporciona l\'email',
-            ),
-        ],
-        responses= {401: 'You provided no api key', 404: 'contribution not found', 200: 'Dispersions d\'energia i dimensions creades correctament'})
-    def retrieve(self, request):
-        c = Calcul.objects.filter(file=request.data['file'])
-        serializer = UserSerializer(c)
         return Response(serializer.data)
 
     @swagger_auto_schema(
@@ -910,8 +795,11 @@ class UserViewSet(ViewSet):
 
     @api_view(['POST'])
     def createUser(request):
-        serializer = UserSerializer(data=request.data)
+        serializer = SystemUserSerializer(data=request.data)
+        print(serializer)
+        print('despues de serializer')
         if serializer.is_valid():
+            print('es valido')
             serializer.save()
             return Response(serializer.data, status = status.HTTP_201_CREATED)
         
@@ -920,11 +808,11 @@ class UserViewSet(ViewSet):
     @api_view(['PUT', 'DELETE', 'GET'])
     def modifyUser(request, email):
         try:
-            u = User.objects.get(email = email)
-        except User.DoesNotExist:
+            u = SystemUser.objects.get(email = email)
+        except SystemUser.DoesNotExist:
             return Response(status=status.HTTP_404_NOT_FOUND)
         if request.method == 'PUT':
-            serializer = UserSerializer(u, data=request.data)
+            serializer = SystemUserSerializer(u, data=request.data)
             if serializer.is_valid():
                 serializer.save()
                 return Response(serializer.data, status = status.HTTP_200_OK)
@@ -933,13 +821,14 @@ class UserViewSet(ViewSet):
             u.delete()
             return Response(status=status.HTTP_204_NO_CONTENT)
         elif request.method == 'GET': 
-            serializer = UserSerializer(u)
+            serializer = SystemUserSerializer(u)
             return Response(serializer.data, status = status.HTTP_200_OK)
+
 
 class FileViewSet(ViewSet):
 
     @api_view(['POST'])
-    def createUser(request):
+    def createFile(request):
         serializer = FileSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
@@ -948,9 +837,9 @@ class FileViewSet(ViewSet):
         return Response(status=status.HTTP_404_NOT_FOUND)
     
     @api_view(['PUT', 'DELETE', 'GET'])
-    def modifyUser(request, email):
+    def modifyFile(request, id):
         try:
-            u = File.objects.get(email = email)
+            u = File.objects.get(id = id)
         except File.DoesNotExist:
             return Response(status=status.HTTP_404_NOT_FOUND)
         if request.method == 'PUT':
@@ -965,3 +854,51 @@ class FileViewSet(ViewSet):
         elif request.method == 'GET': 
             serializer = FileSerializer(u)
             return Response(serializer.data, status = status.HTTP_200_OK)
+    
+    @api_view(['GET'])
+    def getFiles(request, userId):
+        try:
+            u = File.objects.get(User = userId)
+        except File.DoesNotExist:
+            return Response(status=status.HTTP_404_NOT_FOUND)
+        serializer = FileSerializer(u)
+        return Response(serializer.data, status = status.HTTP_200_OK)
+
+class CalculViewSet(ViewSet):
+
+    @api_view(['POST'])
+    def createCalcul(request):
+        serializer = CalculSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status = status.HTTP_201_CREATED)
+        
+        return Response(status=status.HTTP_404_NOT_FOUND)
+    
+    @api_view(['PUT', 'DELETE', 'GET'])
+    def modifyCalcul(request, email):
+        try:
+            u = Calcul.objects.get(email = email)
+        except Calcul.DoesNotExist:
+            return Response(status=status.HTTP_404_NOT_FOUND)
+        if request.method == 'PUT':
+            serializer = CalculSerializer(u, data=request.data)
+            if serializer.is_valid():
+                serializer.save()
+                return Response(serializer.data, status = status.HTTP_200_OK)
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        elif request.method == 'DELETE':
+            u.delete()
+            return Response(status=status.HTTP_204_NO_CONTENT)
+        elif request.method == 'GET': 
+            serializer = CalculSerializer(u)
+            return Response(serializer.data, status = status.HTTP_200_OK)
+
+    @api_view(['GET'])
+    def getCalculs(request, fileId):
+        try:
+            u = Calcul.objects.get(File = fileId)
+        except Calcul.DoesNotExist:
+            return Response(status=status.HTTP_404_NOT_FOUND)
+        serializer = CalculSerializer(u)
+        return Response(serializer.data, status = status.HTTP_200_OK)

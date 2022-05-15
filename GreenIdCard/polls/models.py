@@ -118,30 +118,46 @@ class ExistingBuldingEnergyAndEmissionsDispersions(models.Model):
 
     unique_together = [["building_type", "climatic_zone"]]
 
-class User(models.Model):
-    email = models.CharField(max_length=100, primary_key=True)
-    name = models.CharField(max_length=100)
-    surname = models.CharField(max_length=100)
-    password = models.CharField(max_length=100)
+class SystemUser(models.Model):
+    email = models.CharField(max_length=100, unique=True)
+    name = models.CharField(max_length=100, default='name')
+    surname = models.CharField(max_length=100, default='surname')
+    password = models.CharField(max_length=100, default='password')
     
 
 class File(models.Model):
-    name = models.CharField(max_length=100)
+    name = models.CharField(max_length=100, default='name')
     description = models.CharField(max_length=100)
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    user = models.ForeignKey(SystemUser, on_delete=models.CASCADE)
 
 class Calcul(models.Model):
     type = models.CharField(max_length=100)
     date = models.CharField(max_length=100)
-    value = models.FloatField()
-    calification = models.CharField(max_length=100)
-    consumption = models.FloatField()
     file = models.ForeignKey(File, on_delete=models.CASCADE)
+    value11 = models.CharField(max_length=100, default='0.0')
+    calification11 =  models.CharField(max_length=100, default='A')
+    value12 = models.CharField(max_length=100, default='0.0')
+    calification12 =  models.CharField(max_length=100, default='A')
+    value13 = models.CharField(max_length=100, default='0.0')
+    calification13 =  models.CharField(max_length=100, default='A')
+    value21 = models.CharField(max_length=100, null=True)
+    calification21 =  models.CharField(max_length=100, null=True)
+    value22 = models.CharField(max_length=100, null=True)
+    calification22 =  models.CharField(max_length=100, null=True)
+    value23 = models.CharField(max_length=100, null=True)
+    calification23 =  models.CharField(max_length=100, null=True)
+    value31 = models.CharField(max_length=100, null=True)
+    calification31 =  models.CharField(max_length=100, null=True)
+    value32 = models.CharField(max_length=100, null=True)
+    calification32 =  models.CharField(max_length=100, null=True)
+    value33 = models.CharField(max_length=100, null=True)
+    calification33 =  models.CharField(max_length=100, null=True)
+    
 
 class BuildingValues(models.Model):
     antiquity = models.CharField(max_length=100)    # nou, existent
     value_type = models.CharField(max_length=100)   # mean, dispersion
-    indicator = models.CharField(max_length=100)    # dispersio, consum d'energia, emissions
+    indicator = models.CharField(max_length=100)    # demanda, consum d'energia, emissions
     object_type = models.CharField(max_length=100) # unifamiliar, bloc
     climatic_zone = models.CharField(max_length=4)  # A1, A2, D4...
     value1 = models.FloatField()
@@ -166,10 +182,10 @@ class ClassificationData(models.Model):
 
 class ObjectData(models.Model):
     object = models.CharField(max_length=100)  #building, sistema software
-    antiquity = models.CharField(max_length=100, null=True)    # nou, existent
+    object_type = models.CharField(max_length=100) # unifamiliar, bloc
     value_type = models.CharField(max_length=100)   # mean, dispersion
     indicator = models.CharField(max_length=100, null=True)    # demanda, consum d'energia, emissions
-    object_type = models.CharField(max_length=100) # unifamiliar, bloc
+    antiquity = models.CharField(max_length=100, null=True)    # nou, existent
     climatic_zone = models.CharField(max_length=4, null=True)  # A1, A2, D4...
     value1 = models.DecimalField(decimal_places=2, max_digits=100)
     value2 = models.DecimalField(decimal_places=2, max_digits=100, null = True)
