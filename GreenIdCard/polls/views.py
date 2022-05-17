@@ -752,11 +752,11 @@ class CalculationDataSet(ViewSet):
         return Response(status=status.HTTP_404_NOT_FOUND)
     
     @api_view(['PUT', 'DELETE', 'GET'])
-    def ModifyBuildingData (request, object, antiquity, value_type, indicator, object_type, climatic_zone):
+    def ModifyBuildingData (request, object, antiquity, value_type, indicator, object_type, climatic_zone, zone):
         try:
-            bv = ObjectData.objects.get(object = object, antiquity=antiquity, value_type=value_type, indicator=indicator, object_type=object_type, climatic_zone=climatic_zone)
+            bv = ObjectData.objects.get(object = object, antiquity=antiquity, value_type=value_type, indicator=indicator, object_type=object_type, climatic_zone=climatic_zone, zone=zone)
         except ObjectData.DoesNotExist:
-            return Response(status=status.HTTP_404_NOT_FOUND)
+            return Response(status=status.HTTP_404_NOT_FOUND)   
         if request.method == 'PUT':
             serializer = ObjectDataSerializer(bv, data=request.data)
             if serializer.is_valid():
@@ -787,6 +787,24 @@ class CalculationDataSet(ViewSet):
             bv.delete()
             return Response(status=status.HTTP_204_NO_CONTENT)
         elif request.method == 'GET': 
+            serializer = ObjectDataSerializer(bv)
+            return Response(serializer.data, status = status.HTTP_200_OK)
+
+    @api_view(['GET'])
+    def getCPUs(request, object_type):
+        bv = ObjectData.objects.filter(object_type=object_type).count()
+        if bv > 1:
+            try: 
+                bv = ObjectData.objects.filter(object_type=object_type)
+            except ObjectData.DoesNotExist:    
+                return Response(status=status.HTTP_404_NOT_FOUND)
+            serializer = ObjectDataSerializer(bv, many=True)
+            return Response(serializer.data, status = status.HTTP_200_OK)
+        else:
+            try: 
+                bv = ObjectData.objects.get(object_type=object_type)
+            except ObjectData.DoesNotExist:    
+                return Response(status=status.HTTP_404_NOT_FOUND)
             serializer = ObjectDataSerializer(bv)
             return Response(serializer.data, status = status.HTTP_200_OK)
 
