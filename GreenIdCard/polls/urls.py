@@ -70,7 +70,7 @@ urlpatterns =[
     path('softwareValues/<str:part_type>/<str:name>/', views.SoftwareValuesSet.ModifySoftwareValues),
     path('classificationData/', views.ClassificationDataSet.createClassification),
     path('classificationData/<str:number_metrics>/<str:classification>/', views.ClassificationDataSet.updateClassification),
-    path('classificationDataC/<str:number_metrics>/<float:C1>/', views.ClassificationDataSet.getClassificationC),
+    path('classificationDataC/<str:number_metrics>/<float:C>/', views.ClassificationDataSet.getClassificationC),
     path('classificationDataC1C2/<str:number_metrics>/<float:C1>/<float:C2>/', views.ClassificationDataSet.getClassificationC1C2),
     path('calculationData/', views.CalculationDataSet.createCalculationData),
     path('buildingCalculationData/<str:object>/<str:antiquity>/<str:value_type>/<str:indicator>/<str:object_type>/<str:climatic_zone>/<str:zone>/', views.CalculationDataSet.ModifyBuildingData),
