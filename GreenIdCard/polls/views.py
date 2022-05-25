@@ -770,6 +770,15 @@ class CalculationDataSet(ViewSet):
             serializer = ObjectDataSerializer(bv)
             return Response(serializer.data, status = status.HTTP_200_OK)
 
+    @api_view(['GET'])
+    def getBuildingMaximumValue(request, object, antiquity, value_type, indicator, object_type, climatic_zone, zone, classification):
+        try:
+            bv = ObjectData.objects.get(object = object, antiquity=antiquity, value_type=value_type, indicator=indicator, object_type=object_type, climatic_zone=climatic_zone, zone=zone, classification=classification)
+        except ObjectData.DoesNotExist:
+            return Response(status=status.HTTP_404_NOT_FOUND)   
+        serializer = ObjectDataSerializer(bv)
+        return Response(serializer.data, status = status.HTTP_200_OK)
+
 
     @api_view(['PUT', 'DELETE', 'GET'])
     def ModifySoftwareData (request, object, object_type, value_type):

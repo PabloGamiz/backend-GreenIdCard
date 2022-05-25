@@ -70,7 +70,7 @@ class SystemUserSerializer(serializers.ModelSerializer):
         fields = ('id', 'email', 'name','surname', 'password')
 
 class FileSerializer(serializers.ModelSerializer):
-    user = SystemUserSerializer(read_only=True)
+    #user = SystemUserSerializer(read_only=True)
     class Meta:
         model = File
         fields = ('id','name', 'description', 'user')
@@ -103,4 +103,4 @@ class ObjectDataSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = ObjectData
-        fields = ('object','antiquity', 'value_type', 'indicator', 'object_type', 'climatic_zone', 'value1', 'value2', 'value3')
+        fields = ('object','antiquity', 'value_type', 'indicator', 'object_type', 'climatic_zone','zone', 'classification', 'value1', 'value2', 'value3')

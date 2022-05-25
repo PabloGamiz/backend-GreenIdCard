@@ -119,6 +119,7 @@ class ExistingBuldingEnergyAndEmissionsDispersions(models.Model):
     unique_together = [["building_type", "climatic_zone"]]
 
 class SystemUser(models.Model):
+    id = models.AutoField(primary_key=True)
     email = models.CharField(max_length=100, unique=True)
     name = models.CharField(max_length=100, default='name')
     surname = models.CharField(max_length=100, default='surname')
@@ -128,12 +129,12 @@ class SystemUser(models.Model):
 class File(models.Model):
     name = models.CharField(max_length=100, default='name')
     description = models.CharField(max_length=100)
-    user = models.ForeignKey(SystemUser, on_delete=models.CASCADE)
+    user = models.CharField(max_length=100, unique=True)
 
 class Calcul(models.Model):
     type = models.CharField(max_length=100)
-    date = models.CharField(max_length=100)
-    file = models.ForeignKey(File, on_delete=models.CASCADE)
+    date = models.DateField()
+    file = models.IntegerField()
     value11 = models.CharField(max_length=100, default='0.0')
     calification11 =  models.CharField(max_length=100, default='A')
     value12 = models.CharField(max_length=100, default='0.0')
@@ -191,6 +192,7 @@ class ObjectData(models.Model):
     antiquity = models.CharField(max_length=100, default='default')    # nou, existent
     zone = models.CharField(max_length=100, default='default') #España, Islas canarias
     climatic_zone = models.CharField(max_length=7, default='default')  # A1, A2, D4...
+    classification = models.CharField(max_length=7, default= 'default')
     value1 = models.DecimalField(decimal_places=2, max_digits=100, default=0.0)
     value2 = models.DecimalField(decimal_places=2, max_digits=100, default=0.0)
     value3 = models.DecimalField(decimal_places=2, max_digits=100, default=0.0)
